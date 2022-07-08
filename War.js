@@ -31,3 +31,12 @@ function shuffle() {
 
     }
 }
+
+class Player {
+    constructor (Aphelios, Seraphine) {
+        this.Aphelios = Aphelios;
+        this.Seraphine = Seraphine;
+    }
+
+    
+}
