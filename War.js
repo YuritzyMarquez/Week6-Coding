@@ -41,6 +41,18 @@ class Player {
 
 }
 
+function competitors(stacks) {
+    let deck = [];
+    for (let i = 1; i <= 26; i++) {
+        deck.push(stacks.shift());
+    }
+    return deck;
+}
+
+function singleCard (singles) {
+    return singles.shift();
+}
+
 function startGame (Aphelios, Seraphine) {
     let card = 26;
     let Aphelios_card = 0;
@@ -72,3 +84,8 @@ function startGame (Aphelios, Seraphine) {
         }
         return 1;
  }
+
+let deck = Deck;
+ let competitors_Aphelios = competitors(deck);
+ let competitors_Seraphine = competitors(deck);
+ startGame(competitors_Aphelios, competitors_Seraphine);
