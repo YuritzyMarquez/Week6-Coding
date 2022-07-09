@@ -1,91 +1,76 @@
-const SUITS = ["heart", "clubs", "diamonds", "spades"]
-const VALUES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-  
-class Deck {
-    constructor(cards = combination()) {
-        this.cards = this.cards;
+function cardStack () {  //this creates the 52 card deck used to play war
     let deck = [];
-    }
-    
-    shuffle() {
-        for (let i = this.cards.length - 1; i > 0; i--) {
-             const newCard = Math.floor(Math.random() * (i + 1))
-            const oldCard = this.cards[newCard]
-            this.cards[newCard] = this.cards[i]
-            this.cards[i] = oldCard
-    
-        }   
-    }
-}
-
-class Cards {
-    constructor(suits, values) {
-        this.suits = suits;
-        this.values = values;
-    }
-}
-
-function combination () {
-    return SUITS.flatMap(suits =>{
-        return VALUES.map(values => {
-            return new Cards(suits, values)
-        })
-    })
-}
-
-class Player {
-    constructor (Aphelios, Seraphine) {
-        this.Aphelios = Aphelios;
-        this.Seraphine = Seraphine;
-    }
-
-}
-
-function competitors(stacks) {
-    let deck = [];
-    for (let i = 1; i <= 26; i++) {
-        deck.push(stacks.shift());
+    let start = 1;
+    for (let i = 1; start <= 4; i++) {
+        deck.push(i);
+        if (i === 13) {
+            i = 0;
+            start++;
+        }
     }
     return deck;
 }
 
-function singleCard (singles) {
+function shuffle(cards) {    // this function is to shuffle the cards randomly to be prepared to be dealt to each player
+    let currentIndex = cards.length;
+
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
+    }
+    return cards;
+}
+
+function player(competitors) {   // this function is used to deal 26 cards to the 2 players in the game
+    let deck = [];
+    for (let i = 1; i <= 26; i++) {
+        deck.push(competitors.shift());
+    }
+    return deck;
+}
+
+function card(singles) {      // this takes the deck array .shift takes the first element of the array (the card) then removes it from the array
     return singles.shift();
 }
 
-function startGame (Aphelios, Seraphine) {
+function start_game(player1, player2) {  // this function is where the game starts once you run the code on live server
     let card = 26;
-    let Aphelios_card = 0;
-    let Aphelios_score = 0;
+    let Draven_card = 0;
     let Seraphine_card = 0;
+    let Draven_score = 0;
     let Seraphine_score = 0;
-    while (card != 0) {
-        Aphelios_card = Aphelios.shift();
-        Seraphine_card = Seraphine.shift();
+    while (card != 0) {               // this while loop is telling th computer that as long as there is cards to be played, keep playing
+        Draven_card = player1.shift();      // arr is player 1 deck
+        Seraphine_card = player2.shift();      // array is player 2 deck 
+        if (Draven_card > Seraphine_card) {
+            console.log("Draven is the victor! Reward = 1 point");
+            Draven_score++;
+        }
+        else if (Draven_card < Seraphine_card) {
+            console.log("Seraphine is the victor! Reward = 1 point");
+            Seraphine_score++;
+        }
+        else {
+            console.log("You both get NATHING!");
+        }
+        card--;
     }
+    console.log("Draven's score: " + Draven_score + " Seraphine's score: " + Seraphine_score);   // this is used to print out the score after each round
+    if (Draven_score > Seraphine_score) {
+        console.log("Draven has won the War!");
+    }
+    else if (Draven_score < Seraphine_score) {
+        console.log("Seraphine has won the War!");
+    }
+    else {
+        console.log("You both tied, you suck!");
+    }
+    console.log("Draven's score: " + Draven_score + " Seraphine's score: " + Seraphine_score);
+    return 1;
+}
 
-    if (Aphelios_card > Seraphine_card) {
-        console.log("Aphelios Wins!");
-        Aphelios_score++;
-    } else if(Aphelios_card < Seraphine_card) {
-        console.log("Seraphine Wins!")
-        Seraphine_score++
-    } else {
-        console.log("It's a Draw! Both get NATHING!") 
-            card--;
-        }
-    console.log("Aphelios score: " + Aphelios_score + "Seraphine score: " + Seraphine_score);
-        if (Seraphine_score > Aphelios_score) {
-            console.log("Seraphine is the Winner!");
-        } else if(Seraphine_score < Aphelios_score) {
-            console.log("Aphelios is the Winner!");
-        }else{
-        console.log("You both suck!");
-        }
-        return 1;
- }
-
-let deck = Deck;
- let competitors_Aphelios = competitors(deck);
- let competitors_Seraphine = competitors(deck);
- startGame(competitors_Aphelios, competitors_Seraphine);
+let deck = (shuffle(cardStack()));  //this creates a deck and suffles it before the game starts
+let player_Draven = player(deck);  //for line 74 and 75 it deals 26 cards to those 2 players
+let player_Seraphine = player(deck);
+start_game(player_Draven, player_Seraphine);
