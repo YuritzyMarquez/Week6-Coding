@@ -66,8 +66,6 @@ function start_game(player1, player2) {  // this function is where the game star
     else {
         console.log("You both tied, you suck!");
     }
-    console.log("Draven's score: " + Draven_score + " Seraphine's score: " + Seraphine_score);
-    return 1;
 }
 
 let deck = (shuffle(cardStack()));  //this creates a deck and suffles it before the game starts
