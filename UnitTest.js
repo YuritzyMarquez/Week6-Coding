@@ -1,7 +1,4 @@
 var foreshadow = chai.foreshadow;
-var Draven_card = 0;
-var Seraphine_card = 0;
-let start_game = [];
 
 describe("Function", function() {
     describe("StartGame", function(){
